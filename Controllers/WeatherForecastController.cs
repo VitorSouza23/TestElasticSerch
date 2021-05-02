@@ -28,7 +28,7 @@ namespace TestElasticSerch.Controllers
         public IEnumerable<WeatherForecast> Get()
         {
             var span = Elastic.Apm.Agent.Tracer.CurrentSpan;
-            _logger.LogDebug("Buscando dados...");
+            _logger.LogInformation("Buscando dados...");
             try
             {
                 var rng = new Random();
@@ -42,6 +42,7 @@ namespace TestElasticSerch.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 span?.CaptureException(ex);
                 throw ex;
             }
